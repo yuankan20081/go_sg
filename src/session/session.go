@@ -1,4 +1,4 @@
-// session project session.go
+// session session.go
 package session
 
 import (

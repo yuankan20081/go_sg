@@ -3,6 +3,7 @@ package main
 
 import (
 	"fmt"
+	"io"
 	"os"
 	"session"
 	"time"
@@ -15,8 +16,8 @@ func main() {
 		return
 	}
 	s := session.New(f, 0)
-	s.OnReadFunc(func(p []byte, sid int) {
-		fmt.Println(string(p))
-	})
-	s.Serve(time.Second * 1000)
+	go s.Flush()
+	io.Copy(os.Stdout, s)
+	s.Stop()
+	time.Sleep(time.Second * 1)
 }
